@@ -19,7 +19,6 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        if (resumeCount == 0) return null;
         for (int i = 0; i < resumeCount; i++) {
             if (storage[i].toString().equals(uuid)) {
                 return storage[i];
@@ -42,9 +41,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] resumes = new Resume[resumeCount];
-        System.arraycopy(storage, 0, resumes, 0, resumeCount);
-        return resumes;
+        return Arrays.copyOf(storage, resumeCount);
     }
 
     int size() {
