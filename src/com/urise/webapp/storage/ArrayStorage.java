@@ -1,27 +1,13 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    public void update(Resume r) {
-        int index = getIndex(r.toString());
-        if (index >= 0) {
-            storage[index] = r;
-            return;
-        }
-        System.out.println("Резюме " + r + " не найдено");
-    }
-
+    @Override
     public void save(Resume r) {
         if (size >= storage.length) {
             System.out.println("Нет места, хранилище переполнено");
@@ -34,6 +20,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[size++] = r;
     }
 
+    @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
@@ -45,10 +32,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         System.out.println("Резюме " + uuid + " не найдено");
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
-
+    @Override
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
