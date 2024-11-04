@@ -38,6 +38,8 @@ public abstract class AbstractArrayStorage implements Storage {
         return null;
     }
 
+    public abstract void delete(String uuid);
+
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
