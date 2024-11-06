@@ -27,7 +27,20 @@ public abstract class AbstractArrayStorage implements Storage {
         System.out.println("Резюме " + r + " не найдено");
     }
 
-    public abstract void save(Resume r);
+    public void save(Resume r) {
+        if (size >= storage.length) {
+            System.out.println("Нет места, хранилище переполнено");
+            return;
+        }
+        if (getIndex(r.toString()) >= 0) {
+            System.out.println("Резюме " + r + " уже было добавлено");
+            return;
+        }
+        add(r);
+        size++;
+    }
+
+    protected abstract void add(Resume r);
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
@@ -38,7 +51,18 @@ public abstract class AbstractArrayStorage implements Storage {
         return null;
     }
 
-    public abstract void delete(String uuid);
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            moveArray(index);
+            storage[size - 1] = null;
+            size--;
+            return;
+        }
+        System.out.println("Резюме " + uuid + " не найдено");
+    }
+
+    protected abstract void moveArray(int index);
 
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
