@@ -4,7 +4,6 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-
     @Override
     protected void insertResume(Resume r) {
         int index = -getIndex(r.getUuid()) - 1;
