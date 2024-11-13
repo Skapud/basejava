@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 
 /**
@@ -10,7 +9,7 @@ import java.util.Arrays;
 public abstract class AbstractArrayStorage implements Storage {
     protected static final int STORAGE_LIMIT = 10000;
 
-    protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     public void clear() {
@@ -18,51 +17,49 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void update(Resume r) {
+    public final void update(Resume r) {
         int index = getIndex(r.toString());
-        if (index >= 0) {
-            storage[index] = r;
+        if (index < 0) {
+            System.out.println("Резюме " + r + " не найдено");
             return;
         }
-        System.out.println("Резюме " + r + " не найдено");
+        storage[index] = r;
     }
 
-    public void save(Resume r) {
+    public final void save(Resume r) {
         if (size >= storage.length) {
             System.out.println("Нет места, хранилище переполнено");
-            return;
-        }
-        if (getIndex(r.toString()) >= 0) {
+        } else if (getIndex(r.toString()) >= 0) {
             System.out.println("Резюме " + r + " уже было добавлено");
+        } else {
+            insertResume(r);
+            size++;
+        }
+    }
+
+    protected abstract void insertResume(Resume r);
+
+    public final Resume get(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("Резюме " + uuid + " не найдено");
+            return null;
+        }
+        return storage[index];
+    }
+
+    public final void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("Резюме " + uuid + " не найдено");
             return;
         }
-        add(r);
-        size++;
+        fillDeletedElement(index);
+        storage[size - 1] = null;
+        size--;
     }
 
-    protected abstract void add(Resume r);
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        }
-        System.out.println("Резюме " + uuid + " не найдено");
-        return null;
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            moveArray(index);
-            storage[size - 1] = null;
-            size--;
-            return;
-        }
-        System.out.println("Резюме " + uuid + " не найдено");
-    }
-
-    protected abstract void moveArray(int index);
+    protected abstract void fillDeletedElement(int index);
 
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
