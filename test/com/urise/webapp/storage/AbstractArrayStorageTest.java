@@ -3,7 +3,6 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.*;
 import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.*;
-
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -66,6 +65,19 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
+    void saveOverflow() {
+        storage.clear();
+        for(int i = 0; i < STORAGE_LIMIT; i++) {
+            try {
+                storage.save(new Resume("uuid" + i));
+            } catch (Exception e) {
+                Assertions.fail("Error during fill");
+            }
+        }
+        assertThrows(ExistStorageException.class, () -> storage.save(new Resume(String.valueOf(STORAGE_LIMIT))));
+    }
+
+    @Test
     void delete() {
         storage.delete("uuid1");
         assertSize(2);
@@ -86,18 +98,5 @@ public abstract class AbstractArrayStorageTest {
     @Test
     void getNotExist() {
         assertThrows(NotExistStorageException.class, () -> storage.get("dummy"));
-    }
-
-    @Test
-    void overflow() {
-        storage.clear();
-        for(int i = 0; i < STORAGE_LIMIT; i++) {
-            try {
-                storage.save(new Resume("uuid" + i));
-            } catch (Exception e) {
-                Assertions.fail("Error during fill");
-            }
-        }
-        assertThrows(ExistStorageException.class, () -> storage.save(new Resume(String.valueOf(STORAGE_LIMIT))));
     }
 }
