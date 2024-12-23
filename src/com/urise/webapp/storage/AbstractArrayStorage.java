@@ -40,8 +40,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public void doDelete(Object object) {
-//        Resume r = (Resume) object;
-//        int index = (Integer) getSearchKey(r.getUuid());
         int index = (Integer) object;
         if (index < 0) {
             throw new NotExistStorageException(storage[(int) object].getUuid());
@@ -71,12 +69,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public boolean isExist(Object searchKey) {
-        for (Resume resume : storage) {
-            if (resume != null && resume.getUuid().equals(searchKey.toString())) {
-                return true;
-            }
-        }
-        return false;
+        return (int) searchKey >= 0;
     }
 
     protected abstract void fillDeletedElement(int index);

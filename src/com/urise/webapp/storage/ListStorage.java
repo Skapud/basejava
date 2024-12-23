@@ -1,12 +1,11 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ListStorage extends AbstractStorage {
     protected final ArrayList<Resume> list = new ArrayList<>();
-    protected Iterator<Resume> iterator = list.iterator();
 
     @Override
     public void clear() {
@@ -15,40 +14,23 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void doSave(Resume r, Object object) {
-        Resume newResume = new Resume((String) object);
-        list.add(newResume);
+        list.add(r);
     }
 
     @Override
     public void doDelete(Object object) {
-        list.remove((Resume) object);
+        list.remove((int) object);
     }
 
     @Override
-    public void doUpdate(Resume key, Object object) {
-        int index = list.indexOf(key);
-        list.set(index, (Resume) object);
+    public void doUpdate(Resume r, Object object) {
+        int index = (Integer) object;
+        list.set(index, r);
     }
 
     @Override
     public Resume doGet(Object object) {
-        while (iterator.hasNext()) {
-            Resume element = iterator.next();
-            if (element.equals(object)) {
-                return element;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public boolean isExist(Object searchKey) {
-        for (Resume element : list) {
-            if (element.equals(searchKey)) {
-                return true;
-            }
-        }
-        return false;
+        return list.get((Integer) object);
     }
 
     @Override
@@ -62,12 +44,16 @@ public class ListStorage extends AbstractStorage {
     }
 
     public Object getSearchKey(String uuid) {
-        while (iterator.hasNext()) {
-            Resume resume = iterator.next();
-            if (resume.getUuid().equals(uuid)) {
-                return resume;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUuid().equals(uuid)) {
+                return i;
             }
         }
-        return null;
+        return -1;
+    }
+
+    @Override
+    public boolean isExist(Object searchKey) {
+        return (int) searchKey >= 0;
     }
 }
