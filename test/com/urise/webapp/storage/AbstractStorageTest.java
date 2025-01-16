@@ -4,7 +4,12 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -16,10 +21,10 @@ public abstract class AbstractStorageTest {
     protected static final String UUID_4 = "UUID4";
     protected static final String UUID_NOT_EXIST = "dummy";
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1);
-    protected static final Resume RESUME_2 = new Resume(UUID_2);
-    protected static final Resume RESUME_3 = new Resume(UUID_3);
-    protected static final Resume RESUME_4 = new Resume(UUID_4);
+    protected static final Resume RESUME_1 = new Resume(UUID_1, "Name_1");
+    protected static final Resume RESUME_2 = new Resume(UUID_2, "Name_2");
+    protected static final Resume RESUME_3 = new Resume(UUID_3, "Name_3");
+    protected static final Resume RESUME_4 = new Resume(UUID_4, "Name_4");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -47,20 +52,26 @@ public abstract class AbstractStorageTest {
 
     @Test
     void update() {
-        Resume newResume = new Resume(RESUME_1.getUuid());
+        Resume newResume = new Resume(RESUME_1.getUuid(), "Name_1");
         storage.update(newResume);
         Assertions.assertSame(newResume, storage.get(RESUME_1.getUuid()));
         assertSize(storage.size());
-        assertThrows(NotExistStorageException.class, () -> storage.update(new Resume(UUID_NOT_EXIST)));
+        assertThrows(NotExistStorageException.class, () -> storage.update(new Resume(UUID_NOT_EXIST, "Name_dummy")));
     }
 
     @Test
     void getAll() {
-        if (storage instanceof MapStorage) {
+        if (storage instanceof MapUuidStorage || storage instanceof MapResumeStorage) {
             return;
         }
         Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
         Assertions.assertArrayEquals(expected, storage.getAll());
+    }
+
+    @Test
+    void getAllSorted() {
+        List<Resume> expected = new ArrayList<>(Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+        Assertions.assertEquals(expected, storage.getAllSorted());
     }
 
     @Test

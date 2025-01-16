@@ -1,10 +1,14 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-import java.util.HashMap;
 
-public class MapStorage extends AbstractStorage {
-    protected final HashMap<String, Resume> map = new HashMap<>();
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class MapUuidStorage extends AbstractStorage {
+    protected final Map<String, Resume> map = new HashMap<>();
 
     @Override
     public void clear() {
@@ -12,28 +16,33 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public void doSave(Resume r, Object object) {
-        map.put(object.toString(), r);
+    public void doSave(Resume r, Object key) {
+        map.put(r.getUuid(), r);
     }
 
     @Override
-    public void doDelete(Object object) {
-        map.remove((String) object);
+    public void doDelete(Object key) {
+        map.remove((String) key);
     }
 
     @Override
-    public void doUpdate(Resume r, Object object) {
-        map.replace((String) object, r);
+    public void doUpdate(Resume r, Object key) {
+        map.put(r.getUuid(), r);
     }
 
     @Override
-    public Resume doGet(Object object) {
-        return map.get((String) object);
+    public Resume doGet(Object key) {
+        return map.get((String) key);
     }
 
     @Override
     public Resume[] doGetAll() {
         return map.values().toArray(new Resume[0]);
+    }
+
+    @Override
+    public List<Resume> doGetAllSorted() {
+        return new ArrayList<>(map.values());
     }
 
     @Override
