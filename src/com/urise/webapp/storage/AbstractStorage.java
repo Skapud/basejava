@@ -6,7 +6,6 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class AbstractStorage implements Storage {
 
@@ -52,7 +51,6 @@ public abstract class AbstractStorage implements Storage {
 
     public List<Resume> getAllSorted() {
         List<Resume> storageAsList = doGetAllSorted();
-        storageAsList.removeIf(Objects::isNull);
         storageAsList.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return storageAsList;
     }

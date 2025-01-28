@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -10,8 +12,28 @@ public class Resume implements Comparable<Resume> {
     private final String uuid;
     private final String fullName;
 
+    private enum ContactType {
+        PHONE,
+        EMAIL,
+        SKYPE,
+        WEBLINK
+    }
+
+    private final Map<ContactType, String> contacts = new HashMap<>();
+
+    private enum SectionType {
+        PERSONAL,
+        OBJECTIVE,
+        ACHIEVEMENT,
+        QUALIFICATIONS,
+        EXPERIENCE,
+        EDUCATION
+    }
+
+    private final Map<SectionType, Section> sections = new HashMap<>();
+
     public Resume() {
-        this(UUID.randomUUID().toString(), "Default Name");
+        this(UUID.randomUUID().toString(), "");
     }
 
     public Resume(String uuid, String fullName) {

@@ -31,7 +31,7 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     public Resume doGet(Object key) {
-        return map.get(((Resume) key).getUuid());
+        return (Resume) key;
     }
 
     @Override
@@ -51,11 +51,11 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     public Object getSearchKey(String uuid) {
-        return new Resume(uuid, "");
+        return map.get(uuid);
     }
 
     @Override
     public boolean isExist(Object searchKey) {
-        return map.containsKey(((Resume) searchKey).getUuid());
+        return searchKey != null;
     }
 }

@@ -7,12 +7,12 @@ import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
-    protected AbstractArrayStorageTest(Storage storage) {
+    public AbstractArrayStorageTest(Storage storage) {
         super(storage);
     }
 
     @Test
-    void saveOverflow() {
+    public void saveOverflow() {
         storage.clear();
         for(int i = 0; i < STORAGE_LIMIT; i++) {
             try {
