@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends Section {
-    private final List<String> lines = new ArrayList<>();
+    private final List<String> list = new ArrayList<>();
 
     public List<String> getLines() {
-        return new ArrayList<>(lines);
+        return new ArrayList<>(list);
     }
 
     @Override
@@ -16,11 +16,11 @@ public class ListSection extends Section {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         ListSection that = (ListSection) object;
-        return Objects.equals(lines, that.lines);
+        return Objects.equals(list, that.list);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(lines);
+        return Objects.hashCode(list);
     }
 }
