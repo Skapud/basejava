@@ -1,17 +1,25 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+import java.util.Optional;
+
 public class TextSection extends Section {
-    protected final String text = "";
+    private final String text = "";
 
-    @Override
-    protected void add() {
+    public Optional<String> getText() {
+        return Optional.ofNullable(text);
     }
 
     @Override
-    protected void delete() {
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        TextSection that = (TextSection) object;
+        return Objects.equals(text, that.text);
     }
 
     @Override
-    protected void print() {
+    public int hashCode() {
+        return Objects.hashCode(text);
     }
 }

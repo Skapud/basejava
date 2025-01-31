@@ -11,25 +11,7 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private final String uuid;
     private final String fullName;
-
-    private enum ContactType {
-        PHONE,
-        EMAIL,
-        SKYPE,
-        WEBLINK
-    }
-
     private final Map<ContactType, String> contacts = new HashMap<>();
-
-    private enum SectionType {
-        PERSONAL,
-        OBJECTIVE,
-        ACHIEVEMENT,
-        QUALIFICATIONS,
-        EXPERIENCE,
-        EDUCATION
-    }
-
     private final Map<SectionType, Section> sections = new HashMap<>();
 
     public Resume() {

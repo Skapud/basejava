@@ -37,7 +37,9 @@ public class Periods {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Periods periods = (Periods) object;
-        return Objects.equals(title, periods.title) && Objects.equals(startDate, periods.startDate) && Objects.equals(endDate, periods.endDate);
+        return Objects.equals(title, periods.title) &&
+                Objects.equals(startDate, periods.startDate) &&
+                Objects.equals(endDate, periods.endDate);
     }
 
     @Override
