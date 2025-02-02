@@ -7,7 +7,14 @@ public class TextSection extends Section {
     private final String text = "";
 
     public Optional<String> getText() {
-        return Optional.ofNullable(text);
+        return Optional.of(text);
+    }
+
+    @Override
+    public String toString() {
+        return "TextSection{" +
+                "text='" + text + '\'' +
+                "} " + super.toString();
     }
 
     @Override

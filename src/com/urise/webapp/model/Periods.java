@@ -4,12 +4,18 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Periods {
+    private final Link homePage;
+
     private final String title;
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final String description;
 
-    public Periods(String title, LocalDate startDate, LocalDate endDate, String description) {
+    public Periods(String name, String url, String title, LocalDate startDate, LocalDate endDate, String description) {
+        Objects.requireNonNull(startDate, "startDate must not be null");
+        Objects.requireNonNull(endDate, "endDate must not be null");
+        Objects.requireNonNull(title, "title must not be null");
+        this.homePage = new Link(name, url);
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -50,7 +56,8 @@ public class Periods {
     @Override
     public String toString() {
         return "Periods{" +
-                "title='" + title + '\'' +
+                "homePage=" + homePage +
+                ", title='" + title + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
