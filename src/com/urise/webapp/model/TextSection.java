@@ -4,7 +4,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class TextSection extends Section {
+    private final String title = "";
     private final String text = "";
+
+    public TextSection(String title, String text) {
+        this.title = title;
+        this.text = text;
+    }
 
     public Optional<String> getText() {
         return Optional.of(text);

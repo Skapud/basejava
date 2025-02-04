@@ -33,13 +33,12 @@ public class Companies {
         if (object == null || getClass() != object.getClass()) return false;
         Companies companies = (Companies) object;
         return Objects.equals(name, companies.name) &&
-                Objects.equals(website, companies.website) &&
-                Objects.equals(periods, companies.periods);
+                Objects.equals(website, companies.website);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, website, periods);
+        return Objects.hash(name, website);
     }
 
     @Override
