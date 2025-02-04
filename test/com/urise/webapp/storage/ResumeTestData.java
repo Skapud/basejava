@@ -1,7 +1,11 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.model.ListSection;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.TextSection;
+import com.urise.webapp.model.TimelineSection;
+
+import java.util.List;
 
 import static com.urise.webapp.model.ContactType.*;
 import static com.urise.webapp.model.SectionType.*;
@@ -19,10 +23,10 @@ public class ResumeTestData {
         resume.setContact(STACKOVERFLOW, "stackoverflow.com/users/4443260/kris-rice");
         resume.setSection(PERSONAL, new TextSection("Личные качества", "Шизофренический склад ума"));
         resume.setSection(OBJECTIVE, new TextSection("Позиция", "Ведущий бездельник"));
-        resume.setSection(ACHIEVEMENT, "");
-        resume.setSection(QUALIFICATIONS, "");
-        resume.setSection(EXPERIENCE, "");
-        resume.setSection(EDUCATION, "");
+        resume.setSection(ACHIEVEMENT, new ListSection());
+        resume.setSection(QUALIFICATIONS, new ListSection());
+        resume.setSection(EXPERIENCE, new TimelineSection());
+        resume.setSection(EDUCATION, new TimelineSection());
         return resume;
     }
 }

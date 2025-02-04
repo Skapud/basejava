@@ -2,8 +2,10 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,12 +25,14 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        //do
+        for (File files : Objects.requireNonNull(directory.listFiles())) {
+            files.delete();
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        return directory.listFiles().length;
     }
 
     @Override
@@ -38,7 +42,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doUpdate(Resume r, File file) {
-        //do
+        try {
+            doWrite(r, file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
@@ -60,16 +68,24 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected Resume doGet(File file) {
-        return null;
+        return doRead(file);
     }
 
     @Override
     protected void doDelete(File file) {
-        //do
+        file.delete();
     }
 
     @Override
     protected List<Resume> doGetAllSorted() {
-        return null;
+        List<Resume> list = new ArrayList<>();
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            if (file.isFile()) {
+                list.add(doRead(file));
+            }
+        }
+        return list;
     }
+
+    protected abstract Resume doRead(File file);
 }

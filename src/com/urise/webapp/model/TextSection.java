@@ -4,11 +4,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class TextSection extends Section {
-    private final String title = "";
     private final String text = "";
 
-    public TextSection(String title, String text) {
-        this.title = title;
+    public TextSection(String... text) {
         this.text = text;
     }
 
