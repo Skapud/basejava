@@ -5,8 +5,6 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.TextSection;
 import com.urise.webapp.model.TimelineSection;
 
-import java.util.List;
-
 import static com.urise.webapp.model.ContactType.*;
 import static com.urise.webapp.model.SectionType.*;
 
@@ -30,10 +28,3 @@ public class ResumeTestData {
         return resume;
     }
 }
-
-("Личные качества"),
-("Позиция"),
-("Достижения"),
-("Квалификация"),
-("Опыт работы"),
-("Образование");
