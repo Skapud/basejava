@@ -53,10 +53,6 @@ public abstract class AbstractStorage<SK> implements Storage {
         return object;
     }
 
-    public Resume[] getAll() {
-        return doGetAll();
-    }
-
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
         List<Resume> storageAsList = doGetAllSorted();
@@ -71,8 +67,6 @@ public abstract class AbstractStorage<SK> implements Storage {
     protected abstract void doDelete(SK object);
 
     protected abstract Resume doGet(SK object);
-
-    protected abstract Resume[] doGetAll();
 
     protected abstract List<Resume> doGetAllSorted();
 

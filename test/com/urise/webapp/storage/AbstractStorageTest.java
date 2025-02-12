@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,17 +15,22 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("/Users/igorpodolan/Documents/Java_Learning/basejava/storage");
+
     protected Storage storage;
+
     protected static final String UUID_1 = "UUID1";
     protected static final String UUID_2 = "UUID2";
     protected static final String UUID_3 = "UUID3";
     protected static final String UUID_4 = "UUID4";
     protected static final String UUID_NOT_EXIST = "dummy";
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1, "Name_1");
-    protected static final Resume RESUME_2 = new Resume(UUID_2, "Name_2");
-    protected static final Resume RESUME_3 = new Resume(UUID_3, "Name_3");
-    protected static final Resume RESUME_4 = new Resume(UUID_4, "Name_4");
+    private static final ResumeTestData testData = new ResumeTestData();
+
+    protected static final Resume R1 = testData.create(UUID_1, "Name_1");
+    protected static final Resume R2 = testData.create(UUID_2, "Name_2");
+    protected static final Resume R3 = testData.create(UUID_3, "Name_3");
+    protected static final Resume R4 = testData.create(UUID_4, "Name_4");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -33,9 +39,9 @@ public abstract class AbstractStorageTest {
     @BeforeEach
     public void setUp() {
         storage.clear();
-        storage.save(RESUME_1);
-        storage.save(RESUME_2);
-        storage.save(RESUME_3);
+        storage.save(R1);
+        storage.save(R2);
+        storage.save(R3);
     }
 
     @Test
@@ -47,43 +53,34 @@ public abstract class AbstractStorageTest {
     public void clear() {
         storage.clear();
         assertSize(0);
-        Assertions.assertArrayEquals(new Resume[0], storage.getAll());
+        Assertions.assertArrayEquals(new Resume[0], storage.getAllSorted().toArray());
     }
 
     @Test
-    public void update() {
-        Resume newResume = new Resume(RESUME_1.getUuid(), "Name_1");
+    public void update() throws Exception {
+        Resume newResume = new Resume(R1.getUuid(), "Name_1");
         storage.update(newResume);
-        Assertions.assertSame(newResume, storage.get(RESUME_1.getUuid()));
+        Assertions.assertEquals(newResume, storage.get(R1.getUuid()));
         assertSize(storage.size());
         assertThrows(NotExistStorageException.class, () -> storage.update(new Resume(UUID_NOT_EXIST, "Name_dummy")));
     }
 
     @Test
-    public void getAll() {
-        if (storage instanceof MapUuidStorage || storage instanceof MapResumeStorage) {
-            return;
-        }
-        Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
-        Assertions.assertArrayEquals(expected, storage.getAll());
-    }
-
-    @Test
-    public void getAllSorted() {
-        List<Resume> expected = new ArrayList<>(Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+    public void getAllSorted() throws Exception {
+        List<Resume> expected = new ArrayList<>(Arrays.asList(R1, R2, R3));
         Assertions.assertEquals(expected, storage.getAllSorted());
     }
 
     @Test
-    public void save() {
-        storage.save(RESUME_4);
+    public void save() throws Exception {
+        storage.save(R4);
         assertSize(4);
-        assertGet(RESUME_4);
+        assertGet(R4);
     }
 
     @Test
     public void saveExist() {
-        assertThrows(ExistStorageException.class, () -> storage.save(RESUME_1));
+        assertThrows(ExistStorageException.class, () -> storage.save(R1));
     }
 
     @Test
@@ -95,9 +92,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertGet(RESUME_1);
-        assertGet(RESUME_2);
-        assertGet(RESUME_3);
+        assertGet(R1);
+        assertGet(R2);
+        assertGet(R3);
     }
 
     @Test

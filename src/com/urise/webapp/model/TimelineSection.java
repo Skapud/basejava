@@ -1,11 +1,19 @@
 package com.urise.webapp.model;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class TimelineSection extends Section {
-    private final List<Companies> companies = new ArrayList<>();
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private final List<Companies> companies;
+
+    public TimelineSection(List<Companies> companies) {
+        this.companies = companies;
+    }
 
     public List<Companies> getCompanies() {
         return new ArrayList<>(companies);

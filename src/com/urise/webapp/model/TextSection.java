@@ -1,17 +1,20 @@
 package com.urise.webapp.model;
 
+import java.io.Serial;
 import java.util.Objects;
-import java.util.Optional;
 
 public class TextSection extends Section {
-    private final String text = "";
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-    public TextSection(String... text) {
+    private final String text;
+
+    public TextSection(String text) {
         this.text = text;
     }
 
-    public Optional<String> getText() {
-        return Optional.of(text);
+    public String getText() {
+        return text;
     }
 
     @Override

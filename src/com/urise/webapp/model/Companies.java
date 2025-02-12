@@ -1,10 +1,11 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Companies {
+public class Companies implements Serializable {
     private final String name;
     private final String website;
     private final List<Periods> periods;
