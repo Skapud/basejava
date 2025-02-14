@@ -24,18 +24,18 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        fileExplorer(dir);
+        fileExplorer(dir, "");
     }
 
-    public static void fileExplorer(File dir) {
+    public static void fileExplorer(File dir, String space) {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println("Файл " + file.getName());
+                    System.out.println(space + "└── File " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println("Директория " + file.getName());
-                    fileExplorer(file);
+                    System.out.println(space + "├── Directory " + file.getName());
+                    fileExplorer(file, space + "   ");
                 }
             }
         }
