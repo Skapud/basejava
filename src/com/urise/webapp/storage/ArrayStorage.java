@@ -19,7 +19,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected Object getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].toString().equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
