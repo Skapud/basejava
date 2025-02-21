@@ -11,19 +11,19 @@ import static com.urise.webapp.model.SectionType.*;
 public class ResumeTestData {
     public Resume create(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        resume.setContact(PHONE, "+74996993941");
-        resume.setContact(MOBILE, "+7995591117336");
-        resume.setContact(HOME_PHONE, "+79057641579");
-        resume.setContact(SKYPE, "skapud");
-        resume.setContact(MAIL, "tinyxxl@bk.ru");
-        resume.setContact(LINKEDIN, "linkedin.com/in/igor-podolian-61006b2b7");
-        resume.setContact(GITHUB, "github.com/Skapud/basejava");
-        resume.setContact(STACKOVERFLOW, "stackoverflow.com/users/4443260/kris-rice");
-        resume.setSection(PERSONAL, new TextSection("Personal data"));
-        resume.setSection(OBJECTIVE, new TextSection("Lead non-worker"));
-        resume.setSection(ACHIEVEMENT, new ListSection(List.of("Achivment11", "Achivment12", "Achivment13")));
-        resume.setSection(QUALIFICATIONS, new ListSection(List.of("Java", "SQL", "Cycling", "Gym")));
-        resume.setSection(EXPERIENCE, new TimelineSection(List.of(
+        resume.addContact(PHONE, "+74996993941");
+        resume.addContact(MOBILE, "+7995591117336");
+        resume.addContact(HOME_PHONE, "+79057641579");
+        resume.addContact(SKYPE, "skapud");
+        resume.addContact(MAIL, "tinyxxl@bk.ru");
+        resume.addContact(LINKEDIN, "linkedin.com/in/igor-podolian-61006b2b7");
+        resume.addContact(GITHUB, "github.com/Skapud/basejava");
+        resume.addContact(STACKOVERFLOW, "stackoverflow.com/users/4443260/kris-rice");
+        resume.addSection(PERSONAL, new TextSection("Personal data"));
+        resume.addSection(OBJECTIVE, new TextSection("Lead non-worker"));
+        resume.addSection(ACHIEVEMENT, new ListSection(List.of("Achivment11", "Achivment12", "Achivment13")));
+        resume.addSection(QUALIFICATIONS, new ListSection(List.of("Java", "SQL", "Cycling", "Gym")));
+        resume.addSection(EXPERIENCE, new TimelineSection(List.of(
                 new Companies("Adzhakhuri and Khachapuri", "https://adzhapuri.ge", List.of(new Periods(
                         "Povar",
                         LocalDate.of(2016, 5, 1),
@@ -35,7 +35,7 @@ public class ResumeTestData {
                         LocalDate.of(2022, 12, 05),
                         "Разработка веб приложения")))
         )));
-        resume.setSection(EDUCATION, new TimelineSection(List.of(
+        resume.addSection(EDUCATION, new TimelineSection(List.of(
                 new Companies("School 1479", "https://sch1479.ru", List.of(new Periods(
                         "Schoolboy",
                         LocalDate.of(2000, 9, 1),

@@ -9,7 +9,10 @@ public class TimelineSection extends Section {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final List<Companies> companies;
+    private List<Companies> companies;
+
+    public TimelineSection() {
+    }
 
     public TimelineSection(List<Companies> companies) {
         this.companies = companies;

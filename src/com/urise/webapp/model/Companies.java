@@ -1,14 +1,20 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Companies implements Serializable {
-    private final String name;
-    private final String website;
-    private final List<Periods> periods;
+    private String name;
+    private String website;
+    private List<Periods> periods;
+
+    public Companies() {
+    }
 
     public Companies(String name, String website, List<Periods> periods) {
         this.name = name;

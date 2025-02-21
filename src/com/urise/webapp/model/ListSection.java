@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,10 @@ public class ListSection extends Section {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final List<String> list;
+    private List<String> list;
+
+    public ListSection() {
+    }
 
     public ListSection(List<String> list) {
         this.list = list;

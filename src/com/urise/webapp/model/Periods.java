@@ -1,18 +1,45 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Objects;
 
+import static com.urise.webapp.util.DateUtil.NOW;
+import static com.urise.webapp.util.DateUtil.of;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Periods implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final String title;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String description;
+    public static final Periods EMPTY = new Periods();
+
+    private String title;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate startDate;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate endDate;
+    private String description;
+
+    public Periods() {
+    }
+
+    public Periods(int startYear, Month startMonth, String title, String description) {
+        this(title, of(startYear, startMonth), NOW, description);
+    }
+
+    public Periods(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+        this(title, of(startYear, startMonth), of(endYear, endMonth), description);
+    }
 
     public Periods(String title, LocalDate startDate, LocalDate endDate, String description) {
         Objects.requireNonNull(title, "title must not be null");
@@ -21,7 +48,7 @@ public class Periods implements Serializable {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.description = description;
+        this.description = description == null ? "" : description;
     }
 
     public String getTitle() {
