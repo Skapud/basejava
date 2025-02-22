@@ -5,4 +5,4 @@ log
 .DS_Store
 /lib/
 lesson
-storage/
+storagedir/
