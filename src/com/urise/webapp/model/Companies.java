@@ -34,6 +34,18 @@ public class Companies implements Serializable {
         return periods;
     }
 
+    public void addName(String name) {
+        this.name = name;
+    }
+
+    public void addWebsite(String website) {
+        this.website = website;
+    }
+
+    public void addPeriods(List<Periods> periods) {
+        this.periods = periods;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;

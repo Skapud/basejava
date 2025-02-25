@@ -19,6 +19,8 @@ public class ResumeTestData {
         resume.addContact(LINKEDIN, "linkedin.com/in/igor-podolian-61006b2b7");
         resume.addContact(GITHUB, "github.com/Skapud/basejava");
         resume.addContact(STACKOVERFLOW, "stackoverflow.com/users/4443260/kris-rice");
+        resume.addContact(HOME_PAGE, "www.leningradspb.ru");
+        //
         resume.addSection(PERSONAL, new TextSection("Personal data"));
         resume.addSection(OBJECTIVE, new TextSection("Lead non-worker"));
         resume.addSection(ACHIEVEMENT, new ListSection(List.of("Achivment11", "Achivment12", "Achivment13")));

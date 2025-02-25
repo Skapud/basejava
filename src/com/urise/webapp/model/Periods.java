@@ -33,11 +33,11 @@ public class Periods implements Serializable {
     public Periods() {
     }
 
-    public Periods(int startYear, Month startMonth, String title, String description) {
+    public Periods(String title, int startYear, Month startMonth, String description) {
         this(title, of(startYear, startMonth), NOW, description);
     }
 
-    public Periods(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+    public Periods(String title, int startYear, Month startMonth, int endYear, Month endMonth, String description) {
         this(title, of(startYear, startMonth), of(endYear, endMonth), description);
     }
 
