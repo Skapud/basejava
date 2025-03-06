@@ -8,8 +8,8 @@ import java.io.Reader;
 import java.io.Writer;
 
 public class JsonParser {
-    private static Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(Section.class, new JsonSectionAdapter())
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(Section.class, new JsonSectionAdapter<>())
             .create();
 
     public static <T> T read(Reader reader, Class<T> clazz) {

@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    private final Serializer serializer;
+    private final Serializer streamSerializer;
 
-    protected PathStorage(String path, Serializer serializer) {
+    protected PathStorage(String path, Serializer streamSerializer) {
         Objects.requireNonNull(path, "directory must not be null");
-        this.serializer = serializer;
+        this.streamSerializer = streamSerializer;
         this.directory = Paths.get(path);
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(path + " is not directory or is not witable");
@@ -48,7 +48,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(Resume resume, Path path) {
         try {
-            serializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            streamSerializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toString(), e);
         }
@@ -63,7 +63,7 @@ public class PathStorage extends AbstractStorage<Path> {
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            serializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            streamSerializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Couldn't create path " + path, getFileName(path), e);
         }
@@ -72,7 +72,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return serializer.doRead(new BufferedInputStream(Files.newInputStream(path)));
+            return streamSerializer.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Read error", getFileName(path), e);
         }

@@ -7,10 +7,10 @@ import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    protected void insertResume(Resume r) {
-        int index = -(Integer)getSearchKey(r.getUuid()) - 1;
-        System.arraycopy(storage, index, storage, index + 1, size - index);
-        storage[index] = r;
+    protected void insertResume(Resume resume, int index) {
+        int insertionIndex = -index - 1;
+        System.arraycopy(storage, insertionIndex, storage, insertionIndex + 1, size - insertionIndex);
+        storage[insertionIndex] = resume;
     }
 
     @Override
@@ -19,7 +19,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         Resume searchKey = new Resume(uuid, "");
         return Arrays.binarySearch(storage, 0, size, searchKey, Comparator.comparing(Resume::getUuid));
     }

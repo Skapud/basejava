@@ -7,7 +7,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class XmlStreamSerializer implements Serializer {
-    private XmlParser xmlParser;
+    private final XmlParser xmlParser;
 
     public XmlStreamSerializer() {
         xmlParser = new XmlParser(
@@ -24,8 +24,8 @@ public class XmlStreamSerializer implements Serializer {
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
-        try (Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-            return xmlParser.unmarshall(r);
+        try (Reader resume = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+            return xmlParser.unmarshall(resume, Resume.class);
         }
     }
 }

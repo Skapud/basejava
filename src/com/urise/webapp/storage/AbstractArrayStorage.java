@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -27,31 +27,29 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void doSave(Resume r, Object object) {
+    public void doSave(Resume resume, Integer key) {
         if (size >= storage.length) {
-            throw new StorageException("Storage overflow", r.getUuid());
+            throw new StorageException("Storage overflow", resume.getUuid());
         }
-        insertResume(r);
+        insertResume(resume, key);
         size++;
     }
 
     @Override
-    public void doDelete(Object object) {
-        int index = (Integer) object;
-        fillDeletedElement(index);
+    public void doDelete(Integer key) {
+        fillDeletedElement(key);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public Resume doGet(Object object) {
-        return storage[(Integer) object];
+    public Resume doGet(Integer key) {
+        return storage[key];
     }
 
     @Override
-    public void doUpdate(Resume r, Object object) {
-        int index = (Integer) getSearchKey(r.getUuid());
-        storage[index] = r;
+    public void doUpdate(Resume resume, Integer key) {
+        storage[key] = resume;
     }
 
     @Override
@@ -59,13 +57,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
-    public boolean isExist(Object searchKey) {
-        return (int) searchKey >= 0;
+    public boolean isExist(Integer key) {
+        return key >= 0;
     }
 
     protected abstract void fillDeletedElement(int index);
 
-    protected abstract void insertResume(Resume r);
+    protected abstract void insertResume(Resume resume, int index);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract Integer getSearchKey(String uuid);
 }

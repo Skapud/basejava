@@ -26,9 +26,9 @@ public class XmlParser {
         }
     }
 
-    public <T> T unmarshall(Reader reader) {
+    public <T> T unmarshall(Reader reader, Class<T> tClass) {
         try {
-            return (T) unmarshaller.unmarshal(reader);
+            return tClass.cast(unmarshaller.unmarshal(reader));
         } catch (JAXBException e) {
             throw new IllegalStateException(e);
         }
