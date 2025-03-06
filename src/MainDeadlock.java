@@ -8,12 +8,19 @@ public class MainDeadlock {
         Thread thread0 = new Thread(mainDeadlock::deposit);
         Thread thread1 = new Thread(mainDeadlock::withdraw);
 
+        System.out.println(thread0.getName() + " " + thread0.getState());
+        System.out.println(thread1.getName() + " " + thread1.getState());
         thread0.start();
         thread1.start();
+        Thread.sleep(1000);
+        System.out.println(thread0.getName() + " " + thread0.getState());
+        System.out.println(thread1.getName() + " " + thread1.getState());
         thread0.join();
         thread1.join();
+        System.out.println(thread0.getName() + " " + thread0.getState());
+        System.out.println(thread1.getName() + " " + thread1.getState());
 
-        System.out.println(mainDeadlock.balance);
+        System.out.println("BALANCE: " + mainDeadlock.balance);
     }
 
     public void deposit() {
