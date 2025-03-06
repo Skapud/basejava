@@ -12,9 +12,13 @@ public class MainDeadlock {
         System.out.println(thread1.getName() + " " + thread1.getState());
         thread0.start();
         thread1.start();
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         System.out.println(thread0.getName() + " " + thread0.getState());
         System.out.println(thread1.getName() + " " + thread1.getState());
+        if (thread0.getState() == Thread.State.WAITING &&
+                thread1.getState() == Thread.State.WAITING) {
+            System.out.println("...DEADLOCK");
+        }
         thread0.join();
         thread1.join();
         System.out.println(thread0.getName() + " " + thread0.getState());
