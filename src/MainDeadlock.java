@@ -1,6 +1,7 @@
 public class MainDeadlock {
     private int balance = 0;
     private final Object mainDeadlock0 = new Object();
+    private final Object mainDeadlock1 = new Object();
 
     public static void main(String[] args) throws InterruptedException {
         MainDeadlock mainDeadlock = new MainDeadlock();
@@ -15,53 +16,24 @@ public class MainDeadlock {
         Thread.sleep(3000);
         System.out.println(thread0.getName() + " " + thread0.getState());
         System.out.println(thread1.getName() + " " + thread1.getState());
-        if (thread0.getState() == Thread.State.WAITING &&
-                thread1.getState() == Thread.State.WAITING) {
-            System.out.println("...DEADLOCK");
-        }
         thread0.join();
         thread1.join();
-        System.out.println(thread0.getName() + " " + thread0.getState());
-        System.out.println(thread1.getName() + " " + thread1.getState());
-
-        System.out.println("BALANCE: " + mainDeadlock.balance);
     }
 
     public void deposit() {
         synchronized (mainDeadlock0) {
-            for (int i = 0; i < 40; i++) {
-                balance = balance + 500;
-                System.out.println("+500");
-
-                if (balance >= 5000) {
-                    mainDeadlock0.notify();
-                }
-
-                try {
-//                    while (balance >= 5000) {
-                        mainDeadlock0.wait();
-//                    }
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+            System.out.println("some code");
+            synchronized (mainDeadlock1) {
+                System.out.println("some code");
             }
         }
     }
 
     public void withdraw() {
-        synchronized (mainDeadlock0) {
-            for (int i = 0; i < 4; i++) {
-                while (balance < 5000) {
-                    try {
-                        System.out.println("sleep");
-                        mainDeadlock0.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                System.out.println(balance + "-5000");
-                balance -= 5000;
-                mainDeadlock0.notify();
+        synchronized (mainDeadlock1) {
+            System.out.println("some code");
+            synchronized (mainDeadlock0) {
+                System.out.println("some code");
             }
         }
     }
