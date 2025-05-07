@@ -100,7 +100,7 @@ public class FileStorage extends AbstractStorage<File> {
     private File[] getCheckedListFiles(File directory) {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Read error", null);
+            throw new StorageException("Directory read error");
         }
         return files;
     }

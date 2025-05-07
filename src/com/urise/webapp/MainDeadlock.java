@@ -1,3 +1,5 @@
+package com.urise.webapp;
+
 public class MainDeadlock {
     private int balance = 0;
     private final Object mainDeadlock0 = new Object();
