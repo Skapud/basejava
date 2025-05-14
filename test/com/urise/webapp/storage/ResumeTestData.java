@@ -11,15 +11,15 @@ import static com.urise.webapp.model.SectionType.*;
 public class ResumeTestData {
     public Resume create(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-//        resume.addContact(PHONE, "+74996993941");
-//        resume.addContact(MOBILE, "+7995591117336");
-//        resume.addContact(HOME_PHONE, "+79057641579");
-//        resume.addContact(SKYPE, "skapud");
-//        resume.addContact(MAIL, "tinyxxl@bk.ru");
-//        resume.addContact(LINKEDIN, "linkedin.com/in/igor-podolian-61006b2b7");
-//        resume.addContact(GITHUB, "github.com/Skapud/basejava");
-//        resume.addContact(STACKOVERFLOW, "stackoverflow.com/users/4443260/kris-rice");
-//        resume.addContact(HOME_PAGE, "www.leningradspb.ru");
+        resume.addContact(PHONE, "+74996993941");
+        resume.addContact(MOBILE, "+7995591117336");
+        resume.addContact(HOME_PHONE, "+79057641579");
+        resume.addContact(SKYPE, "skapud");
+        resume.addContact(MAIL, "tinyxxl@bk.ru");
+        resume.addContact(LINKEDIN, "linkedin.com/in/igor-podolian-61006b2b7");
+        resume.addContact(GITHUB, "github.com/Skapud/basejava");
+        resume.addContact(STACKOVERFLOW, "stackoverflow.com/users/4443260/kris-rice");
+        resume.addContact(HOME_PAGE, "www.leningradspb.ru");
 //        //
 //        resume.addSection(PERSONAL, new TextSection("Personal data"));
 //        resume.addSection(OBJECTIVE, new TextSection("Lead non-worker"));

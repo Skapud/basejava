@@ -13,18 +13,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
-//    protected static final File STORAGE_DIR = new File(System.getProperty("user.dir") + "/storagedir");
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected Storage storage;
 
-    protected static final String UUID_1 = "UUID1";
-    protected static final String UUID_2 = "UUID2";
-    protected static final String UUID_3 = "UUID3";
-    protected static final String UUID_4 = "UUID4";
+    protected static final String UUID_1 = UUID.randomUUID().toString();
+    protected static final String UUID_2 = UUID.randomUUID().toString();
+    protected static final String UUID_3 = UUID.randomUUID().toString();
+    protected static final String UUID_4 = UUID.randomUUID().toString();
     protected static final String UUID_NOT_EXIST = "dummy";
 
     private static final ResumeTestData testData = new ResumeTestData();
@@ -58,9 +58,18 @@ public abstract class AbstractStorageTest {
         Assertions.assertArrayEquals(new Resume[0], storage.getAllSorted().toArray());
     }
 
+//    @Test
+//    public void update() throws Exception {
+//        Resume newResume = new Resume(R1.getUuid(), "Name_1");
+//        storage.update(newResume);
+//        Assertions.assertEquals(newResume, storage.get(R1.getUuid()));
+//        assertSize(storage.size());
+//        assertThrows(NotExistStorageException.class, () -> storage.update(new Resume(UUID_NOT_EXIST, "Name_dummy")));
+//    }
+
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume(R1.getUuid(), "Name_1");
+        Resume newResume = testData.create(UUID_1, "New_Name");
         storage.update(newResume);
         Assertions.assertEquals(newResume, storage.get(R1.getUuid()));
         assertSize(storage.size());
@@ -81,12 +90,12 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void saveExist() {
+    public void saveExist() throws Exception {
         assertThrows(ExistStorageException.class, () -> storage.save(R1));
     }
 
     @Test
-    public void delete() {
+    public void delete() throws Exception {
         storage.delete(UUID_1);
         assertSize(2);
         assertThrows(NotExistStorageException.class, () -> storage.get(UUID_1));
@@ -100,7 +109,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getNotExist() {
+    public void getNotExist() throws Exception {
         assertThrows(NotExistStorageException.class, () -> storage.get(UUID_NOT_EXIST));
     }
 
