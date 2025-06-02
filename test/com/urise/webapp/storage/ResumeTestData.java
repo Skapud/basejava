@@ -21,10 +21,10 @@ public class ResumeTestData {
         resume.addContact(STACKOVERFLOW, "stackoverflow.com/users/4443260/kris-rice");
         resume.addContact(HOME_PAGE, "www.leningradspb.ru");
 //        //
-//        resume.addSection(PERSONAL, new TextSection("Personal data"));
-//        resume.addSection(OBJECTIVE, new TextSection("Lead non-worker"));
-//        resume.addSection(ACHIEVEMENT, new ListSection(List.of("Achivment11", "Achivment12", "Achivment13")));
-//        resume.addSection(QUALIFICATIONS, new ListSection(List.of("Java", "SQL", "Cycling", "Gym")));
+        resume.addSection(PERSONAL, new TextSection("Personal data"));
+        resume.addSection(OBJECTIVE, new TextSection("Lead non-worker"));
+        resume.addSection(ACHIEVEMENT, new ListSection(List.of("Achievement11", "Achievement12", "Achievement13")));
+        resume.addSection(QUALIFICATIONS, new ListSection(List.of("Java", "SQL", "Cycling", "Gym")));
 //        resume.addSection(EXPERIENCE, new TimelineSection(List.of(
 //                new Companies("Adzhakhuri and Khachapuri", "https://adzhapuri.ge", List.of(new Periods(
 //                        "Povar",

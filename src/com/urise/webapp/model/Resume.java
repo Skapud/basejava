@@ -5,10 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -23,8 +20,8 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     private String fullName;
 
-    private final Map<ContactType, String> contacts = new HashMap<>();
-    private final Map<SectionType, Section> sections = new HashMap<>();
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     public Resume() {
     }
@@ -77,16 +74,16 @@ public class Resume implements Comparable<Resume>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return Objects.equals(uuid, resume.uuid) &&
-                Objects.equals(fullName, resume.fullName)
-                && Objects.equals(contacts, resume.contacts);
-//              &&  Objects.equals(sections, resume.sections);
+        return Objects.equals(uuid, resume.uuid)
+                && Objects.equals(fullName, resume.fullName)
+                && Objects.equals(contacts, resume.contacts)
+                && Objects.equals(sections, resume.sections);
     }
 
     @Override
     public int hashCode() {
-//        return Objects.hash(uuid, fullName, contacts, sections);
-        return Objects.hash(uuid, fullName, contacts);
+        return Objects.hash(uuid, fullName, contacts, sections);
+//        return Objects.hash(uuid, fullName, contacts);
     }
 
     @Override
