@@ -6,6 +6,7 @@
 </head>
 <body>
 <ol>
+    <h1>Я НА ВЕТКЕ JSP</h1>
     <h2>RESUME LIST</h2>
     <#list resumes as r>
         <li>
