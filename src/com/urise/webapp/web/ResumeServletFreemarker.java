@@ -1,5 +1,6 @@
 package com.urise.webapp.web;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.SqlStorage;
 import com.urise.webapp.storage.Storage;
@@ -18,16 +19,18 @@ public class ResumeServletFreemarker extends HttpServlet {
     private Configuration configuration;
 
     @Override
-    public void init() throws ServletException {
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        storage = Config.get().getStorage();
+        //        storage = new SqlStorage("jdbc:postgresql://localhost:5432/resumes",
+//                "postgres",
+//                "postgres");
+
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-//        Config dbSetup = Config.get();
-        storage = new SqlStorage("jdbc:postgresql://localhost:5432/resumes",
-                "postgres",
-                "postgres");
 
         configuration = new Configuration(Configuration.VERSION_2_3_34);
         configuration.setServletContextForTemplateLoading(getServletContext(), "/WEB-INF/templates");
