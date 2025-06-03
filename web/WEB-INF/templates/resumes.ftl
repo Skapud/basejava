@@ -6,6 +6,7 @@
 </head>
 <body>
 <ol>
+    <h1>Я на ветке Master</h1>
     <h2>RESUME LIST</h2>
     <#list resumes as r>
         <li>
