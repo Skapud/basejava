@@ -16,17 +16,15 @@ public class ResumeServletHtml extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        String name = request.getParameter("name");
-            response.getWriter().write(name == null ? "Hello resumes!" : "Hello " + name + " !");
+//        response.setContentType("text/html; charset=UTF-8");
+//        response.setCharacterEncoding("UTF-8");
+//        String name = request.getParameter("name");
+//            response.getWriter().write(name == null ? "Hello resumes!" : "Hello " + name + " !");
             request.setAttribute("resumes", storage.getAllSorted());
             request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
     }

@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>resumeServlet</servlet-name>
-        <servlet-class>com.urise.webapp.web.ResumeServletFreemarker</servlet-class>
+        <servlet-class>com.urise.webapp.web.ResumeServletHtml</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>resumeServlet</servlet-name>

@@ -9,6 +9,7 @@
     <title>Список всех резюме</title>
 </head>
 <body>
+<jsp:include page="fragments/header.jsp"/>
 <section>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
@@ -18,7 +19,7 @@
 <%--            <th></th>--%>
         </tr>
         <%
-            for (Resume resume : (List<Resume>) request.getAttribute("resumes")) {}
+            for (Resume resume : (List<Resume>) request.getAttribute("resumes")) {
         %>
         <tr>
             <td><a href="resume?uuid=<%=resume.getUuid()%>"><%=resume.getFullName()%></td></a>
@@ -29,5 +30,6 @@
         %>
     </table>
 </section>
+<jsp:include page="fragments/header.jsp"/>
 </body>
 </html>
