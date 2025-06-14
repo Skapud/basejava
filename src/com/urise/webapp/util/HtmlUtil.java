@@ -10,5 +10,4 @@ public class HtmlUtil {
     public static String formatDates(Periods periods) {
         return DateUtil.format(periods.getStartDate()) + " - " + DateUtil.format(periods.getEndDate());
     }
-
 }

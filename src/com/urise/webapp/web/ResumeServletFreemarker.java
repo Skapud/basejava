@@ -22,15 +22,6 @@ public class ResumeServletFreemarker extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         storage = Config.get().getStorage();
-        //        storage = new SqlStorage("jdbc:postgresql://localhost:5432/resumes",
-//                "postgres",
-//                "postgres");
-
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         configuration = new Configuration(Configuration.VERSION_2_3_34);
         configuration.setServletContextForTemplateLoading(getServletContext(), "/WEB-INF/templates");

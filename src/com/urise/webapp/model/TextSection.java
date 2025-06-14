@@ -9,12 +9,15 @@ public class TextSection extends Section {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    public static final TextSection EMPTY = new TextSection("");
+
     private String text;
 
     public TextSection() {
     }
 
     public TextSection(String text) {
+        Objects.requireNonNull(text, "content must not be null");
         this.text = text;
     }
 
@@ -24,9 +27,7 @@ public class TextSection extends Section {
 
     @Override
     public String toString() {
-        return "TextSection{" +
-                "text='" + text + '\'' +
-                "} " + super.toString();
+        return text;
     }
 
     @Override

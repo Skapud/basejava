@@ -67,7 +67,7 @@ public class DataStreamSerializer implements Serializer {
     private static void readContacts(DataInputStream dis, Resume resume) throws IOException {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
-            resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
+            resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
         }
     }
 
@@ -82,7 +82,7 @@ public class DataStreamSerializer implements Serializer {
                 case EXPERIENCE, EDUCATION -> section = readTimelineSection(dis);
                 default -> throw new IllegalStateException("Unexpected value: " + sectionType);
             }
-            resume.addSection(sectionType, section);
+            resume.setSection(sectionType, section);
         }
     }
 

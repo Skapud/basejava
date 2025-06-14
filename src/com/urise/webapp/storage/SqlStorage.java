@@ -15,6 +15,11 @@ public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
         this.sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
@@ -38,14 +43,28 @@ public class SqlStorage implements Storage {
                     throw new NotExistStorageException(r.getUuid());
                 }
             }
+
+            try (PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM contact WHERE resume_uuid = ?")) {
+                ps.setString(1, r.getUuid());
+                ps.execute();
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM section WHERE resume_uuid = ?")) {
+                ps.setString(1, r.getUuid());
+                ps.execute();
+            }
+
             try (PreparedStatement preparedStatement = conn.prepareStatement("" +
-                    "UPDATE contact SET value = ? " +
-                    " WHERE resume_uuid = ? AND type = ?")) {
+                    "INSERT INTO contact (value, resume_uuid, type) " +
+                    "VALUES (?, ?, ?)")) {
                 processContacts(r, preparedStatement);
             }
+
             try (PreparedStatement preparedStatement = conn.prepareStatement("" +
-                    "UPDATE section SET value = ? " +
-                    " WHERE resume_uuid = ? AND type = ?")) {
+                    "INSERT INTO section (value, resume_uuid, type) " +
+                    "VALUES (?, ?, ?)")) {
                 processSections(r, preparedStatement);
             }
             return null;
@@ -106,8 +125,8 @@ public class SqlStorage implements Storage {
                 do {
                     String value = rs.getString("value");
                     ContactType type = ContactType.valueOf(rs.getString("type"));
-                    resume.addContact(type, value);
-                } while(rs.next());
+                    resume.setContact(type, value);
+                } while (rs.next());
             }
 
             try (PreparedStatement preparedStatement = conn.prepareStatement("" +
@@ -121,7 +140,7 @@ public class SqlStorage implements Storage {
                     if (!(rs.getString("type") == null)) {
                         SectionType type = SectionType.valueOf(rs.getString("type"));
                         Section value = JsonParser.read(rs.getString("value"), Section.class);
-                        resume.addSection(type, value);
+                        resume.setSection(type, value);
                     }
                 }
             }
@@ -158,7 +177,7 @@ public class SqlStorage implements Storage {
                     String contactType = rs.getString("type");
                     String value = rs.getString("value");
                     Resume resume = resumes.get(resumeUuid);
-                    resume.addContact(ContactType.valueOf(contactType), value);
+                    resume.setContact(ContactType.valueOf(contactType), value);
                 }
             }
             try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM section")) {
@@ -168,7 +187,7 @@ public class SqlStorage implements Storage {
                     SectionType sectionType = SectionType.valueOf(rs.getString("type"));
                     Section section = JsonParser.read(rs.getString("value"), Section.class);
                     Resume resume = resumes.get(resumeUuid);
-                    resume.addSection(sectionType, section);
+                    resume.setSection(sectionType, section);
                 }
             }
             return null;

@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +14,15 @@ public class Companies implements Serializable {
     private String website;
     private List<Periods> periods;
 
+    public static final Companies EMPTY = new Companies("", "", Periods.EMPTY);
+
     public Companies() {
+    }
+
+    public Companies(String name, String website, Periods... periods) {
+        this.name = name;
+        this.website = website;
+        this.periods = Arrays.asList(periods);
     }
 
     public Companies(String name, String website, List<Periods> periods) {
