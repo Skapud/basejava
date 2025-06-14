@@ -2,6 +2,7 @@ package com.urise.webapp.model;
 
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,10 @@ public class TimelineSection extends Section {
     public TimelineSection() {
     }
 
+    public TimelineSection(Companies... companies) {
+        this(Arrays.asList(companies));
+    }
+
     public TimelineSection(List<Companies> companies) {
         this.companies = companies;
     }
@@ -24,9 +29,7 @@ public class TimelineSection extends Section {
 
     @Override
     public String toString() {
-        return "TimelineSection{" +
-                "companies=" + companies +
-                "} " + super.toString();
+        return companies.toString();
     }
 
     @Override
